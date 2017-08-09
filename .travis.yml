@@ -43,3 +43,10 @@ before_script:
 
 script:
   - npm run ci:travis
+
+before_deploy:
+  - rm ./.gitignore
+
+deploy:
+  provider: azure_web_apps
+  verbose: true  
