@@ -32,6 +32,7 @@ install:
 
 after_install:
   - npm rebuild node-sass
+  - npm run webdriver:update
   - ./node_modules/protractor/bin/webdriver-manager update
 
 before_script:
