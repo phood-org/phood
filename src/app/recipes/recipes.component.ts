@@ -2,10 +2,10 @@ import {
     Component,
     OnInit
   } from '@angular/core';
-  
+
   import { AppState } from '../app.service';
   import { PhoodChef } from '../phoodchef.service';
-  
+
   @Component({
     /**
      * The selector is what angular internally uses
@@ -38,7 +38,7 @@ import {
       public appState: AppState,
       public phoodChef: PhoodChef
     ) {}
-  
+
     public ngOnInit() {
       console.log('hello `Recipes` component');
       /**
@@ -49,11 +49,10 @@ import {
     public getRecipes() {
       this.phoodChef.getRecipes();
     }
-  
+
     public submitState(value: string) {
       console.log('submitState', value);
       this.appState.set('value', value);
       this.localState.value = '';
     }
   }
-  
