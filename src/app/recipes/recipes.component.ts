@@ -4,6 +4,7 @@ import {
   } from '@angular/core';
   
   import { AppState } from '../app.service';
+  import { PhoodChef } from '../phoodchef.service';
   
   @Component({
     /**
@@ -35,6 +36,7 @@ import {
      */
     constructor(
       public appState: AppState,
+      public phoodChef: PhoodChef
     ) {}
   
     public ngOnInit() {
@@ -42,6 +44,10 @@ import {
       /**
        * this.title.getData().subscribe(data => this.data = data);
        */
+    }
+
+    public getRecipes() {
+      this.phoodChef.getRecipes();
     }
   
     public submitState(value: string) {
