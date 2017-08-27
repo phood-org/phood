@@ -2,6 +2,7 @@ import {
     Component,
     OnInit
   } from '@angular/core';
+  import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
   import { AppState } from '../app.service';
   import { PhoodChef } from '../phoodchef.service';
@@ -12,7 +13,7 @@ import {
      * for `document.querySelectorAll(selector)` in our index.html
      * where, in this case, selector is the string 'home'.
      */
-    selector: 'recipes',  // <home></home>
+    selector: 'ngdb-modal-basic',  // <home></home>
     /**
      * We need to tell Angular's Dependency Injection which providers are in our app.
      */
@@ -30,7 +31,7 @@ import {
     /**
      * Set our default values
      */
-    public localState = { value: '' };
+    public localState = { recipeNums: this.appState['recipes'] == undefined ? [] : this.appState["recipes"].map(r => r.ID) };
     /**
      * TypeScript public modifiers
      */
@@ -48,6 +49,10 @@ import {
 
     public getRecipes() {
       this.phoodChef.getRecipes();
+    }
+
+    public consoleLocalState() {
+      console.dir(this.localState);
     }
 
     public submitState(value: string) {

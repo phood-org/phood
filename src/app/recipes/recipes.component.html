@@ -1,6 +1,12 @@
 <div>
     <div>
-        Hello World!asdfasdf
         <button (click)="getRecipes()">Get Recipes</button>
+        <button (click)="consoleLocalState()">console localState</button>
+        <p *ngFor="let recipe of appState.state.recipes">
+        <ngb-alert *ngIf="localState.alertOpen" type="primary" [dismissible]="true" (close)="localState.alertOpen = false">
+            <h3 class="uk-card-title">{{recipe.Name}}</h3>
+            <p>Serve Min: {{recipe.ServeMin}} | Serve Max: {{recipe.ServeMax}}</p>
+        </ngb-alert>
+        </p>
     </div>
 </div>
