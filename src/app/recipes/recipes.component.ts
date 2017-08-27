@@ -2,6 +2,7 @@ import {
     Component,
     OnInit
   } from '@angular/core';
+  import { Observable } from 'rxjs';
   import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
   import { AppState } from '../app.service';
@@ -31,7 +32,23 @@ import {
     /**
      * Set our default values
      */
-    public localState = { recipeNums: this.appState['recipes'] == undefined ? [] : this.appState["recipes"].map(r => r.ID) };
+    public model: any;
+    public recipes: Array<any> = this.appState.get("recipes") 
+    // search = (text$: Observable<string>) => {
+    //   text$
+    //     .debounceTime(200)
+    //     .distinctUntilChanged()
+    //     .map(term => term.length < 2 
+    //       ? [] 
+    //       : this.recipes
+    //         .map(r => r.Name)
+    //         .filter(v => 
+    //           v.toLowerCase()
+    //           .indexOf(term.toLowerCase()) > - 1)
+    //           .slice(0, 10));
+    // }
+
+    public localState = { };
     /**
      * TypeScript public modifiers
      */
@@ -52,7 +69,7 @@ import {
     }
 
     public consoleLocalState() {
-      console.dir(this.localState);
+      console.dir(this.recipes);
     }
 
     public submitState(value: string) {
