@@ -44,8 +44,4 @@ export class AppState {
      */
     return JSON.parse(JSON.stringify( object ));
   }
-
-  public watchRecipes() {
-
-  }
 }

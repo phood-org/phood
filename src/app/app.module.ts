@@ -16,7 +16,7 @@ import {
 } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-//ngrx
+// ngrx
 import { StoreModule } from '@ngrx/store';
 import { recipeReducer } from './recipesReducer';
 

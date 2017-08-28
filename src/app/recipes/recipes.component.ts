@@ -2,16 +2,16 @@ import {
     Component,
     OnInit
   } from '@angular/core';
-  import { Observable } from 'rxjs';
-  import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
-  import { AppState } from '../app.service';
-  import { PhoodChef } from '../phoodchef.service';
+import { AppState } from '../app.service';
+import { PhoodChef } from '../phoodchef.service';
 
-  import { Store } from '@ngrx/store';
-  import { GETRECIPES } from '../recipesReducer';
+import { Store } from '@ngrx/store';
+import { GETRECIPES } from '../recipesReducer';
 
-
+import { Recipe } from '../types';
 
   @Component({
     /**
@@ -38,21 +38,7 @@ import {
      * Set our default values
      */
     public model: any;
-    public recipes : Observable<any>;
-    private recipesSubject = this.appState.get("recipes") === undefined ? [] : this.appState.get("recipes").map((recipe) => this.recipes.push(recipe));
-    // search = (text$: Observable<string>) => {
-    //   text$
-    //     .debounceTime(200)
-    //     .distinctUntilChanged()
-    //     .map(term => term.length < 2 
-    //       ? [] 
-    //       : this.recipes
-    //         .map(r => r.Name)
-    //         .filter(v => 
-    //           v.toLowerCase()
-    //           .indexOf(term.toLowerCase()) > - 1)
-    //           .slice(0, 10));
-    // }
+    public recipes: Observable<Recipe>;
 
     public localState = { };
     /**
@@ -74,7 +60,7 @@ import {
     }
 
     public getRecipes() {
-      this.phoodChef.getRecipes().then(() => console.log("Recieved Promise"));
+      this.phoodChef.getRecipes().then(() => console.log('Recieved Promise'));
     }
 
     public consoleLocalState() {

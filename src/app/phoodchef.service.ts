@@ -1,34 +1,32 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Store } from '@ngrx/store';
+import axios from 'axios';
+
 import { AppState, InternalStateType } from './app.service';
 import { GETRECIPES } from './recipesReducer';
-
-import { Store } from '@ngrx/store';
-import 'rxjs/add/operator/map';
+import { Recipe } from './types';
 
 @Injectable()
 export class PhoodChef {
-    private apiUrl = 'http://phoodchef.azurewebsites.net/api/recipes';
+    private axiosClient = axios.create({
+        baseURL: 'http://phoodchef.azurewebsites.net/api'
+    });
 
     constructor(
         public appState: AppState,
-        private http: Http,
         private store: Store<any>
     ) {
     }
 
-    public getRecipes(): Promise<Array<any>> {
-        return new Promise((resolve, reject) => {
-            this.http.get(this.apiUrl).map((res: Response) => res.json())
-            .subscribe((data) => {
+    public getRecipes(): Promise<void> {
+        return this.axiosClient.get('recipes')
+            .then((response) => {
+                let recipes: Recipe[] = response.data;
                 console.log('Received data from api');
-                console.dir(data);
+                console.dir(recipes);
 
-                this.store.dispatch({type: GETRECIPES, payload: data});
-                resolve("It Worked I Hope");
+                this.store.dispatch({type: GETRECIPES, payload: recipes});
             });
-        }
-    }
-
+    };
 
 }
