@@ -36,9 +36,11 @@ import { AppState } from './app.service';
 
     <br>
 
-    <main>
-      <router-outlet></router-outlet>
-    </main>
+    <div class="container-fluid">
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+    </div>
 
     <pre class="app-state">this.appState.state = {{ appState.state | json }}</pre>
 
