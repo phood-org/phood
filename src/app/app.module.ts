@@ -16,6 +16,10 @@ import {
 } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+//ngrx
+import { StoreModule } from '@ngrx/store';
+import { recipeReducer } from './recipesReducer';
+
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -69,6 +73,7 @@ type StoreType = {
     FormsModule,
     HttpModule,
     NgbModule.forRoot(),
+    StoreModule.provideStore({ recipes: recipeReducer }),
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
   ],
   /**

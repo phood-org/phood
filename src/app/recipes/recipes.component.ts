@@ -8,6 +8,11 @@ import {
   import { AppState } from '../app.service';
   import { PhoodChef } from '../phoodchef.service';
 
+  import { Store } from '@ngrx/store';
+  import { GETRECIPES } from '../recipesReducer';
+
+
+
   @Component({
     /**
      * The selector is what angular internally uses
@@ -33,7 +38,8 @@ import {
      * Set our default values
      */
     public model: any;
-    public recipes: Array<any> = this.appState.get("recipes") 
+    public recipes : Observable<any>;
+    private recipesSubject = this.appState.get("recipes") === undefined ? [] : this.appState.get("recipes").map((recipe) => this.recipes.push(recipe));
     // search = (text$: Observable<string>) => {
     //   text$
     //     .debounceTime(200)
@@ -54,8 +60,11 @@ import {
      */
     constructor(
       public appState: AppState,
-      public phoodChef: PhoodChef
-    ) {}
+      public phoodChef: PhoodChef,
+      private store: Store<any>
+    ) {
+      this.recipes = store.select('recipes');
+    }
 
     public ngOnInit() {
       console.log('hello `Recipes` component');
@@ -65,7 +74,7 @@ import {
     }
 
     public getRecipes() {
-      this.phoodChef.getRecipes();
+      this.phoodChef.getRecipes().then(() => console.log("Recieved Promise"));
     }
 
     public consoleLocalState() {
@@ -75,6 +84,6 @@ import {
     public submitState(value: string) {
       console.log('submitState', value);
       this.appState.set('value', value);
-      this.localState.value = '';
+      // this.localState.value = '';
     }
   }

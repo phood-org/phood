@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, Observer, Subject } from 'rxjs';
 
 export type InternalStateType = {
   [key: string]: any
@@ -22,7 +23,7 @@ export class AppState {
     throw new Error('do not mutate the `.state` directly');
   }
 
-  public get(prop?: any) {
+  public get(prop?: any): Subject<any> {
     /**
      * Use our state getter for the clone.
      */
@@ -42,5 +43,9 @@ export class AppState {
      * Simple object clone.
      */
     return JSON.parse(JSON.stringify( object ));
+  }
+
+  public watchRecipes() {
+
   }
 }
