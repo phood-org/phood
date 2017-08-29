@@ -1,16 +1,18 @@
 <div>
-    <div>
-        <button (click)="getRecipes()">Get Recipes</button>
-        <button (click)="consoleLocalState()">console this.recipes</button>
-        <br>
-        <!--<input id='typeahead-basic' type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search"/>-->
-        <div class="row">
-            <div class="card col col-sm-2 col-md-4" *ngFor="let recipe of (this.recipes | async)">
-                <div class="card-block">
-                    <h3 class="card-title">{{recipe.Name}}</h3>
-                    <p class="card-text">Serve Min: {{recipe.ServeMin}} | Serve Max: {{recipe.ServeMax}}</p>
-                </div>
-            </div>
+  <div>
+    <button (click)="getRecipes()">Get Recipes</button>
+    <button (click)="consoleLocalState()">console this.recipes</button>
+    <br>
+    <input type="text" class="form-control" [(ngModel)]="searchText"/>
+    <!--<input id='typeahead-basic' type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search"/>-->
+    <p>localState: {{localState | json}}</p> 
+    <div class="row">
+      <div class="card col-sm-4" *ngFor="let recipe of (filteredRecipes | async)">
+        <div class="card-block">
+          <h3 class="card-title">{{recipe.Name}}</h3>
+          <p class="card-text">Serve Min: {{recipe.ServeMin}} | Serve Max: {{recipe.ServeMax}}</p>
         </div>
+      </div>
     </div>
+  </div>
 </div>

@@ -4,6 +4,7 @@ import {
   } from '@angular/core';
 import { Observable } from 'rxjs';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import _ from 'lodash';
 
 import { AppState } from '../app.service';
 import { PhoodChef } from '../phoodchef.service';
@@ -38,9 +39,12 @@ import { Recipe } from '../types';
      * Set our default values
      */
     public model: any;
-    public recipes: Observable<Recipe>;
+    public allRecipes: Observable<Recipe>;
+    public searchText: string;
+    public filteredRecipes: Observable<Recipe>;
 
-    public localState = { };
+    public localState = { 
+     };
     /**
      * TypeScript public modifiers
      */
@@ -49,7 +53,8 @@ import { Recipe } from '../types';
       public phoodChef: PhoodChef,
       private store: Store<any>
     ) {
-      this.recipes = store.select('recipes');
+      this.allRecipes = store.select('recipes');
+      // this.filteredRecipes = this.allRecipes.map((r) => r.filter((recipe) => this.searchText.indexOf(r.Name) > -1);
     }
 
     public ngOnInit() {
