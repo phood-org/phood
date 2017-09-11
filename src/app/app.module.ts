@@ -28,13 +28,14 @@ import { ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
-import { reducers } from './app.reducers';
-import { effects } from './app.effects';
+import { reducers } from './reducers/app.reducers';
+import { effects } from './reducers/app.effects';
 
 import { HomeComponent } from './home';
 import { AboutComponent } from './about';
 import { NoContentComponent } from './no-content';
 import { XLargeDirective } from './home/x-large';
+import { RecipesComponent } from './recipes';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
@@ -61,7 +62,8 @@ type StoreType = {
     AboutComponent,
     HomeComponent,
     NoContentComponent,
-    XLargeDirective
+    XLargeDirective,
+    RecipesComponent
   ],
   /**
    * Import Angular's modules.
