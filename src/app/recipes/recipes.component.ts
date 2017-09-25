@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 
 import { Recipe, RecipeState } from '../reducers/recipes/recipes.models';
 import * as recipeActions from '../reducers/recipes/recipes.actions';
-import { iReducers } from '../reducers/app.reducers';
+import { IReducers } from '../reducers/app.reducers';
 
 @Component({
   /**
@@ -34,15 +34,19 @@ export class RecipesComponent implements OnInit {
    */
   public localState = { value: '' };
   public recipes: Recipe[];
+  public nextPage: number;
   /**
    * TypeScript public modifiers
    */
   constructor(
-    public store: Store<iReducers>
+    public store: Store<IReducers>
   ) {
-    this.store.select<RecipeState>(state => state.recipes).subscribe(r => {
+    this.store.select<RecipeState>((state) => state.recipes).subscribe((r) => {
       this.recipes = r.recipes;
-    })
+    });
+
+    this.store.dispatch(recipeActions.getRecipes(1));
+    this.nextPage = 2;
   }
 
   public ngOnInit() {
@@ -50,5 +54,10 @@ export class RecipesComponent implements OnInit {
     /**
      * this.title.getData().subscribe(data => this.data = data);
      */
+  }
+
+  public nextPageClick() {
+    this.store.dispatch(recipeActions.getRecipes(this.nextPage));
+    this.nextPage += 1;
   }
 }

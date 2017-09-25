@@ -16,6 +16,7 @@ import {
 } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -30,6 +31,7 @@ import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 import { reducers } from './reducers/app.reducers';
 import { effects } from './reducers/app.effects';
+import { RecipesService } from './reducers/recipes/recipes.service';
 
 import { HomeComponent } from './home';
 import { AboutComponent } from './about';
@@ -43,7 +45,8 @@ import '../styles/headings.css';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
-  AppState
+  AppState,
+  RecipesService
 ];
 
 type StoreType = {
@@ -78,7 +81,8 @@ type StoreType = {
       preloadingStrategy: PreloadAllModules
     }),
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot(effects)
+    EffectsModule.forRoot(effects),
+    StoreDevtoolsModule.instrument()
   ],
   /**
    * Expose our Services and Providers into Angular's dependency injection.
