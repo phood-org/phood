@@ -77,7 +77,7 @@ type StoreType = {
     FormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, {
-      useHash: Boolean(history.pushState) === false,
+      useHash: true, // Boolean(history.pushState) === false,
       preloadingStrategy: PreloadAllModules
     }),
     StoreModule.forRoot(reducers),
