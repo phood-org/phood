@@ -24,11 +24,11 @@ export class RecipesEffect {
         .ofType(recipeActions.GET_RECIPES)
         .map(toPayload)
         // .withLatestFrom<Action, recipeModels.RecipeState>(this.store)
-        .switchMap<recipeModels.RecipePayload, ActionWithPayload<recipeModels.RecipePayload>>((payload, i) => {
+        .mergeMap<recipeModels.RecipePayload, ActionWithPayload<recipeModels.RecipePayload>>((payload, i) => {
             let recipesToAdd: recipeModels.Recipe[];
             return Observable
-                .fromPromise(this.recipesService.getRecipes(payload.Page))
-                .switchMap<recipeModels.ApiWrapper<recipeModels.Recipe[]>, ActionWithPayload<recipeModels.RecipePayload>>((result) => {
+                .fromPromise(this.recipesService.getRecipes(payload.Page, payload.Search))
+                .mergeMap<recipeModels.ApiWrapper<recipeModels.Recipe[]>, ActionWithPayload<recipeModels.RecipePayload>>((result) => {
                     let test = result.Data.map((recipe) => {
                         return recipeActions.addRecipe(recipe);
                     }).concat([

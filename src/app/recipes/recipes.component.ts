@@ -34,7 +34,9 @@ export class RecipesComponent implements OnInit {
    */
   public localState = { value: '' };
   public recipes: Recipe[];
+  public filteredRecipes: Recipe[];
   public nextPage: number;
+  public searchText: string;
   /**
    * TypeScript public modifiers
    */
@@ -43,10 +45,11 @@ export class RecipesComponent implements OnInit {
   ) {
     this.store.select<RecipeState>((state) => state.recipes).subscribe((r) => {
       this.recipes = r.recipes;
+      this.filteredRecipes = this.recipes.filter((x) => _.includes(x.Name, this.searchText));
     });
-
-    this.store.dispatch(recipeActions.getRecipes(1));
     this.nextPage = 2;
+    this.store.dispatch(recipeActions.getRecipes(1));
+    // this.nextPage = 2;
   }
 
   public ngOnInit() {
@@ -57,7 +60,7 @@ export class RecipesComponent implements OnInit {
   }
 
   public nextPageClick() {
-    this.store.dispatch(recipeActions.getRecipes(this.nextPage));
+    this.store.dispatch(recipeActions.getRecipes(1, this.searchText.length > 0 ? this.searchText : undefined));
     this.nextPage += 1;
   }
 }

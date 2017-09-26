@@ -1,5 +1,5 @@
 <h4>Recipes</h4>
-<button (click)="nextPageClick()">Next Page</button>
-<div *ngFor="let recipe of recipes">
+<button (click)="nextPageClick()">Next Page</button><input type="text" [(ngModel)]="searchText" />
+<div *ngFor="let recipe of filteredRecipes">
   {{recipe.Name}}: {{recipe.Instructions}}
 </div>

@@ -1,3 +1,5 @@
+import { Store } from '@ngrx/store';
+
 /**
  * Angular 2 decorators and services
  */
@@ -33,6 +35,8 @@ import { AppState } from './app.service';
     <main>
       <router-outlet></router-outlet>
     </main>
+
+    <pre>{{this.recipes | async | json}}</pre>
   `
 })
 export class AppComponent implements OnInit {
@@ -40,9 +44,15 @@ export class AppComponent implements OnInit {
   public name = 'phood';
   public url = 'https://twitter.com/AngularClass';
 
+  public recipes: Store<any>;
+
   constructor(
-    public appState: AppState
-  ) {}
+    public appState: AppState,
+    public store: Store<any>
+  ) {
+    this.recipes = this.store;
+    console.dir(this.recipes);
+  }
 
   public ngOnInit() {
     console.log('Initial App State', this.appState.state);
