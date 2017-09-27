@@ -33,7 +33,9 @@ import { AppState } from './app.service';
     </nav>
 
     <main>
-      <router-outlet></router-outlet>
+      <div class="container-fluid">
+        <router-outlet></router-outlet>
+      </div>
     </main>
 
     <pre>{{this.recipes | async | json}}</pre>

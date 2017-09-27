@@ -2,6 +2,11 @@
 /* This file is for setting global styles  */
 @import 'variables';
 
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+
+$fa-font-path: '../../node_modules/font-awesome/fonts';
+@import 'node_modules/font-awesome/scss/font-awesome.scss';
+
 nav {
   margin-top: 16px;
 }
