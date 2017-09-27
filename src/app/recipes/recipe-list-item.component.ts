@@ -22,19 +22,18 @@ import * as recipeModels from '../reducers/recipes/recipes.models';
     /**
      * Our list of styles in our component. We may add more to compose many styles together.
      */
-    styleUrls: [],
+    styles: [],
     /**
      * Every Angular template is first compiled by the browser before Angular runs it's compiler.
      */
     template: `
-    <div class="card">
         <div class="card-block">
-        <h4 class="card-title">{{recipe.Name}}</h4>
+        <h4 class="card-title text-center">{{recipe.Name}}</h4>
         <p class="card-text">
             <p>Cook Time: {{recipe.CookTime}} {{recipe.CookUnit}}</p>
             <p>Serves: {{recipe.ServeMin}}-{{recipe.ServeMax}}</p>
+            <p>Yield: {{recipe.Yield}}</p>
         </div>
-    </div>
     `
 })
 export class RecipeListItemComponent implements OnInit {

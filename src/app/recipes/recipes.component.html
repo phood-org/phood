@@ -1,8 +1,6 @@
 <h4>Recipes</h4>
-<button (click)="nextPageClick()">Next Page</button><input type="text" [(ngModel)]="searchText" (input)="filterRecipes()"
+<button (click)="nextPageClick()">Next Page</button><input type="text" [(ngModel)]="searchText" (input)="nextPageClick()"
 />
 <div class="row">
-  <div *ngFor="let recipe of filteredRecipes" class="col-md-2">
-    <recipe-list-item [recipe]="recipe"></recipe-list-item>
-  </div>
+    <recipe-list-item [recipe]="recipe" *ngFor="let recipe of filteredRecipes" class="col-md-2 card"></recipe-list-item>
 </div>

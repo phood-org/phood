@@ -1,1 +1,9 @@
-/*styles for home content only*/
+/*styles for recipes content only*/
+
+.card {
+    transition: background-color 0.2s ease-in;
+}
+
+.card:hover {
+    background-color: rgb(243, 239, 239)
+}

@@ -10,7 +10,9 @@ import { Action, Store } from '@ngrx/store';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 
 import axios from 'axios';
+import _ from 'lodash';
 
+import { IReducers } from '../app.reducers';
 import * as recipeActions from './recipes.actions';
 import * as recipeModels from './recipes.models';
 import { ActionWithPayload } from '../app.models';
@@ -23,24 +25,26 @@ export class RecipesEffect {
     public getRecipes = this.actions$
         .ofType(recipeActions.GET_RECIPES)
         .map(toPayload)
-        // .withLatestFrom<Action, recipeModels.RecipeState>(this.store)
-        .mergeMap<recipeModels.RecipePayload, ActionWithPayload<recipeModels.RecipePayload>>((payload, i) => {
-            let recipesToAdd: recipeModels.Recipe[];
+        .withLatestFrom<recipeModels.RecipePayload, recipeModels.RecipeState>(this.store.select((x) => x.recipes))
+        .mergeMap<[recipeModels.RecipePayload, recipeModels.RecipeState], ActionWithPayload<recipeModels.RecipePayload>>(([payload, store], i) => {
+            let nextPage = store.pages[payload.Search] !== undefined ? _.max(store.pages[payload.Search]) + 1 : 1;
             return Observable
-                .fromPromise(this.recipesService.getRecipes(payload.Page, payload.Search))
+                .fromPromise(this.recipesService.getRecipes(nextPage, payload.Search))
                 .mergeMap<recipeModels.ApiWrapper<recipeModels.Recipe[]>, ActionWithPayload<recipeModels.RecipePayload>>((result) => {
                     let test = result.Data.map((recipe) => {
                         return recipeActions.addRecipe(recipe);
-                    }).concat([
-                        recipeActions.addPage(payload.Search, payload.Page)
-                    ]);
+                    });
+                    if (test.length > 0) {
+                        test.push(recipeActions.addPage(payload.Search, nextPage));
+                    }
+
                     return test;
                 });
         });
 
     constructor(
         private actions$: Actions,
-        private store: Store<any>,
+        private store: Store<IReducers>,
         private recipesService: RecipesService) {
 
     }

@@ -36,7 +36,6 @@ export class RecipesComponent implements OnInit {
   public localState = { value: '' };
   public recipes: Recipe[];
   public filteredRecipes: Recipe[];
-  public nextPage: number;
   public searchText: string;
   /**
    * TypeScript public modifiers
@@ -48,8 +47,7 @@ export class RecipesComponent implements OnInit {
       this.recipes = r.recipes;
       this.filterRecipes();
     });
-    this.nextPage = 2;
-    this.store.dispatch(recipeActions.getRecipes(1));
+    this.store.dispatch(recipeActions.getRecipes());
     // this.nextPage = 2;
   }
 
@@ -61,12 +59,10 @@ export class RecipesComponent implements OnInit {
   }
 
   public nextPageClick() {
-    this.store.dispatch(recipeActions.getRecipes(1, this.searchText.length > 0 ? this.searchText : undefined));
-    this.nextPage += 1;
+    this.store.dispatch(recipeActions.getRecipes(this.searchText.length > 0 ? this.searchText : undefined));
   }
 
   public filterRecipes() {
-    console.log(this.searchText);
     this.filteredRecipes = this.recipes.filter((x) => _.includes(_.lowerCase(x.Name), _.lowerCase(this.searchText)));
   }
 }

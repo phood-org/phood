@@ -15,11 +15,10 @@ export function addRecipe(recipe: Recipe): ActionWithPayload<RecipePayload> {
     };
 }
 
-export function getRecipes(page: number, search?: string): ActionWithPayload<RecipePayload> {
+export function getRecipes(search?: string): ActionWithPayload<RecipePayload> {
     return {
         type: GET_RECIPES,
         payload: {
-            Page: page,
             Search: search || ''
         }
     };
