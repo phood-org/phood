@@ -15,10 +15,11 @@ export interface RecipePayload {
     Recipe?: Recipe;
     Search?: string;
     Page?: number;
+    LoadingId?: string;
 }
 
 export interface RecipeState {
-    loading: boolean;
+    loading: string[];
     pages: {
         [searchString: string]: number[]
     };

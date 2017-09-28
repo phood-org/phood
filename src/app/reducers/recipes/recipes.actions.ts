@@ -5,6 +5,8 @@ export const ADD_RECIPE = 'ADD_RECIPE';
 export const GET_RECIPES = 'GET_RECIPES';
 export const GET_RECIPE_FROM_DB = 'GET_RECIPE_FROM_DB';
 export const ADD_PAGE = 'ADD_PAGE';
+export const SET_LOADING = 'SET_LOADING';
+export const REMOVE_LOADING = 'REMOVE_LOADING';
 
 export function addRecipe(recipe: Recipe): ActionWithPayload<RecipePayload> {
     return {
@@ -41,4 +43,22 @@ export function getRecipeFromDb(recipeId: number): ActionWithPayload<RecipePaylo
             Id: recipeId
         }
     };
+}
+
+export function setLoading(loadingId: string): ActionWithPayload<RecipePayload> {
+    return {
+        type: SET_LOADING,
+        payload: {
+            LoadingId: loadingId
+        }
+    }
+}
+
+export function removeLoading(loadingId: string): ActionWithPayload<RecipePayload> {
+    return {
+        type: REMOVE_LOADING,
+        payload: {
+            LoadingId: loadingId
+        }
+    }
 }

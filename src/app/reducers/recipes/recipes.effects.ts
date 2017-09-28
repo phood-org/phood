@@ -11,6 +11,7 @@ import { Actions, Effect, toPayload } from '@ngrx/effects';
 
 import axios from 'axios';
 import _ from 'lodash';
+import shortId from 'shortid';
 
 import { IReducers } from '../app.reducers';
 import * as recipeActions from './recipes.actions';
@@ -28,18 +29,32 @@ export class RecipesEffect {
         .withLatestFrom<recipeModels.RecipePayload, recipeModels.RecipeState>(this.store.select((x) => x.recipes))
         .mergeMap<[recipeModels.RecipePayload, recipeModels.RecipeState], ActionWithPayload<recipeModels.RecipePayload>>(([payload, store], i) => {
             let nextPage = store.pages[payload.Search] !== undefined ? _.max(store.pages[payload.Search]) + 1 : 1;
+            let loadingId = shortId.generate();
             return Observable
-                .fromPromise(this.recipesService.getRecipes(nextPage, payload.Search))
-                .mergeMap<recipeModels.ApiWrapper<recipeModels.Recipe[]>, ActionWithPayload<recipeModels.RecipePayload>>((result) => {
-                    let test = result.Data.map((recipe) => {
-                        return recipeActions.addRecipe(recipe);
-                    });
-                    if (test.length > 0) {
-                        test.push(recipeActions.addPage(payload.Search, nextPage));
-                    }
+                .from([
+                    recipeActions.setLoading(loadingId)
+                ])
+                .merge(Observable
+                    .fromPromise(this.recipesService.getRecipes(nextPage, payload.Search))
+                    .mergeMap<recipeModels.ApiWrapper<recipeModels.Recipe[]>, ActionWithPayload<recipeModels.RecipePayload>>((result) => {
+                        let test = result.Data.map((recipe) => {
+                            return recipeActions.addRecipe(recipe);
+                        });
 
-                    return test;
-                });
+                        // Add actions on successful return of valid data
+                        if (test.length > 0) {
+                            test.push(
+                                recipeActions.addPage(payload.Search, nextPage)
+                            );
+                        }
+
+                        // Add actions on completed network call, regardless of validity or data
+                        test.push(
+                            recipeActions.removeLoading(loadingId)
+                        );
+                        return test;
+                    })
+                );
         });
 
     constructor(
