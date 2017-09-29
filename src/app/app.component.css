@@ -11,6 +11,10 @@ a.active {
   overflow-y: auto;
 }
 
+.no-scroll {
+  overflow: hidden;
+}
+
 .flexOne {
   flex-grow: 1;
 }

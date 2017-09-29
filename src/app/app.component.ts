@@ -21,25 +21,25 @@ import { AppState } from './app.service';
     './app.component.css'
   ],
   template: `
-    <div class="container-fluid d-flex flex-column h-100">
-      <nav class="col-md-auto">
-        <button [routerLink]=" ['./home'] " class="btn btn-outline-primary"
-          routerLinkActive="disabled" [routerLinkActiveOptions]= "{exact: true}">
-          Home
-        </button>
-        <button [routerLink]=" ['./recipes'] " class="btn btn-outline-primary"
-          routerLinkActive="disabled" [routerLinkActiveOptions]= "{exact: true}">
-          Recipes
-        </button>
-      </nav>
+    <div class="container-fluid h-100 no-scroll pb-3">
+      <div class="col-md-3"></div>
+      <div class="col-md-9 container-fluid d-flex flex-column h-100">
+        <nav class="col-auto container-fluid">
+          <button [routerLink]=" ['./home'] " class="btn btn-outline-primary"
+            routerLinkActive="disabled" [routerLinkActiveOptions]= "{exact: true}">
+            Home
+          </button>
+          <button [routerLink]=" ['./recipes'] " class="btn btn-outline-primary"
+            routerLinkActive="disabled" [routerLinkActiveOptions]= "{exact: true}">
+            Recipes
+          </button>
+        </nav>
 
-      <main class="h-75">
-        <div class="h-100">
-          <router-outlet class="h-100"></router-outlet>
-        </div>
-      </main>
-      <div class="scroll col">
-        <pre>{{this.recipes | async | json}}</pre>
+        <main class="col">
+          <div class="h-100">
+            <router-outlet class="h-100"></router-outlet>
+          </div>
+        </main>
       </div>
     </div>
   `

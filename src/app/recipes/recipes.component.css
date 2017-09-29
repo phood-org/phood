@@ -11,3 +11,7 @@
 .pointer {
     cursor: pointer;
 }
+
+.border-bottom-1 {
+    border-bottom: 1px solid black;
+}

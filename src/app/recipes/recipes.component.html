@@ -1,25 +1,35 @@
 <div class="container-fluid h-100">
   <div class="row h-100">
     <div class="col-sm-3 h-100 d-flex flex-column">
-      <div class="col-md-auto">
-        <button (click)="nextPageClick()">Next Page</button><input type="text" [(ngModel)]="searchText" (input)="nextPageClick()"
-        />
-        <i class="fa fa-spinner fa-pulse fa-fw" *ngIf="isLoading"></i>
-        <span class="sr-only">Loading...</span>
+      <div class="col-md-auto d-flex px -0">
+        <button class="col-auto" (click)="nextPageClick()">Next Page</button>
+        <input class="col" type="text" [(ngModel)]="searchText" (input)="nextPageClick()" />
+        <div class="col-auto">
+          <i class="fa fa-spinner fa-pulse fa-fw" *ngIf="isLoading"></i>
+          <span class="sr-only">Loading...</span>
+        </div>
       </div>
       <div class="scroll col flexOne pl-0">
-        <div *ngFor="let recipe of filteredRecipes" class="w-100 greyHover pointer" (click)="selectRecipe(recipe.Id)">
+        <div *ngFor="let recipe of filteredRecipes" class="w-100 greyHover pointer border-bottom-1" (click)="selectRecipe(recipe.Id)">
           {{recipe.Name}}
         </div>
       </div>
     </div>
+
+    <!-- 
+      Right Half of Screen
+      Might convert to it's own component! 
+    -->
+
     <div class="col-sm-9">
-      <div *ngIf="selectedRecipe" class="d-flex flex-column">
-        <h2 class="text-center">{{ selectedRecipe.Name }}</h2>
-        <span *ngIf="selectedRecipe.CookTime">{{ selectedRecipe.CookTime }} {{ selectedRecipe.CookUnit }}</span>
-        <span *ngIf="selectedRecipe.ServeMin || selectedRecipe.ServeMax">Serves {{ selectedRecipe.ServeMin }} to {{ selectedRecipe.ServeMax }}</span>
-        <span *ngIf="selectedRecipe.Yield">Yieds {{ selectedRecipe.Yield }}</span>
-        <span *ngIf="selectedRecipe.Instructions">Instructions {{ selectedRecipe.Instructions }}</span>
+      <div *ngIf="selectedRecipe" class="card">
+        <h2 class="text-center card-header">{{ selectedRecipe.Name }}</h2>
+        <div class="card-body">
+          <p class="cart-text" *ngIf="selectedRecipe.CookTime">{{ selectedRecipe.CookTime }} {{ selectedRecipe.CookUnit }}</p>
+          <p class="cart-text" *ngIf="selectedRecipe.ServeMin || selectedRecipe.ServeMax">Serves {{ selectedRecipe.ServeMin }} to {{ selectedRecipe.ServeMax }}</p>
+          <p class="cart-text" *ngIf="selectedRecipe.Yield">Yieds {{ selectedRecipe.Yield }}</p>
+          <p class="cart-text" *ngIf="selectedRecipe.Instructions">Instructions {{ selectedRecipe.Instructions }}</p>
+        </div>
       </div>
       <div *ngIf="!selectedRecipe">
         <h3>Select a recipe from the list on the left!</h3>
