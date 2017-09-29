@@ -1,7 +1,29 @@
-<h4>Recipes</h4>
-<button (click)="nextPageClick()">Next Page</button><input type="text" [(ngModel)]="searchText" (input)="nextPageClick()" />
-<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-<span class="sr-only">Loading...</span>
-<div class="row">
-    <recipe-list-item [recipe]="recipe" *ngFor="let recipe of filteredRecipes" class="col-md-2 card"></recipe-list-item>
+<div class="container-fluid h-100">
+  <div class="row h-100">
+    <div class="col-sm-3 h-100 d-flex flex-column">
+      <div class="col-md-auto">
+        <button (click)="nextPageClick()">Next Page</button><input type="text" [(ngModel)]="searchText" (input)="nextPageClick()"
+        />
+        <i class="fa fa-spinner fa-pulse fa-fw" *ngIf="isLoading"></i>
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="scroll col flexOne pl-0">
+        <div *ngFor="let recipe of filteredRecipes" class="w-100 greyHover pointer" (click)="selectRecipe(recipe.Id)">
+          {{recipe.Name}}
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-9">
+      <div *ngIf="selectedRecipe" class="d-flex flex-column">
+        <h2 class="text-center">{{ selectedRecipe.Name }}</h2>
+        <span *ngIf="selectedRecipe.CookTime">{{ selectedRecipe.CookTime }} {{ selectedRecipe.CookUnit }}</span>
+        <span *ngIf="selectedRecipe.ServeMin || selectedRecipe.ServeMax">Serves {{ selectedRecipe.ServeMin }} to {{ selectedRecipe.ServeMax }}</span>
+        <span *ngIf="selectedRecipe.Yield">Yieds {{ selectedRecipe.Yield }}</span>
+        <span *ngIf="selectedRecipe.Instructions">Instructions {{ selectedRecipe.Instructions }}</span>
+      </div>
+      <div *ngIf="!selectedRecipe">
+        <h3>Select a recipe from the list on the left!</h3>
+      </div>
+    </div>
+  </div>
 </div>

@@ -51,7 +51,7 @@ export function setLoading(loadingId: string): ActionWithPayload<RecipePayload> 
         payload: {
             LoadingId: loadingId
         }
-    }
+    };
 }
 
 export function removeLoading(loadingId: string): ActionWithPayload<RecipePayload> {
@@ -60,5 +60,5 @@ export function removeLoading(loadingId: string): ActionWithPayload<RecipePayloa
         payload: {
             LoadingId: loadingId
         }
-    }
+    };
 }

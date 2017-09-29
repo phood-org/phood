@@ -36,7 +36,9 @@ export class RecipesComponent implements OnInit {
   public localState = { value: '' };
   public recipes: Recipe[];
   public filteredRecipes: Recipe[];
-  public searchText: string;
+  public isLoading: boolean;
+  public selectedRecipe: Recipe;
+  public searchText: string = '';
   /**
    * TypeScript public modifiers
    */
@@ -45,6 +47,7 @@ export class RecipesComponent implements OnInit {
   ) {
     this.store.select<RecipeState>((state) => state.recipes).subscribe((r) => {
       this.recipes = r.recipes;
+      this.isLoading = r.loading.length > 0;
       this.filterRecipes();
     });
     this.store.dispatch(recipeActions.getRecipes());
@@ -64,5 +67,9 @@ export class RecipesComponent implements OnInit {
 
   public filterRecipes() {
     this.filteredRecipes = this.recipes.filter((x) => _.includes(_.lowerCase(x.Name), _.lowerCase(this.searchText)));
+  }
+
+  public selectRecipe(recipeId: number) {
+    this.selectedRecipe = this.recipes.find((x) => x.Id === recipeId);
   }
 }

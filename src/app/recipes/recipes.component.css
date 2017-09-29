@@ -1,9 +1,13 @@
 /*styles for recipes content only*/
 
-.card {
+.greyHover {
     transition: background-color 0.2s ease-in;
 }
 
-.card:hover {
-    background-color: rgb(243, 239, 239)
+.greyHover:hover {
+    background-color: rgb(219, 217, 217)
+}
+
+.pointer {
+    cursor: pointer;
 }

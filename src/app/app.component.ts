@@ -21,24 +21,27 @@ import { AppState } from './app.service';
     './app.component.css'
   ],
   template: `
-    <nav>
-      <a [routerLink]=" ['./home'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        Home
-      </a>
-      <a [routerLink]=" ['./recipes'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        Recipes
-      </a>
-    </nav>
+    <div class="container-fluid d-flex flex-column h-100">
+      <nav class="col-md-auto">
+        <button [routerLink]=" ['./home'] " class="btn btn-outline-primary"
+          routerLinkActive="disabled" [routerLinkActiveOptions]= "{exact: true}">
+          Home
+        </button>
+        <button [routerLink]=" ['./recipes'] " class="btn btn-outline-primary"
+          routerLinkActive="disabled" [routerLinkActiveOptions]= "{exact: true}">
+          Recipes
+        </button>
+      </nav>
 
-    <main>
-      <div class="container-fluid">
-        <router-outlet></router-outlet>
+      <main class="h-75">
+        <div class="h-100">
+          <router-outlet class="h-100"></router-outlet>
+        </div>
+      </main>
+      <div class="scroll col">
+        <pre>{{this.recipes | async | json}}</pre>
       </div>
-    </main>
-
-    <pre>{{this.recipes | async | json}}</pre>
+    </div>
   `
 })
 export class AppComponent implements OnInit {
