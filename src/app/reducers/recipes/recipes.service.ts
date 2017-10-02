@@ -14,7 +14,7 @@ export class RecipesService {
             baseURL: 'http://phoodchef.azurewebsites.net/api',
             headers: {
                 'Access-Control-Allow-Origin': '*'
-              }
+            }
         });
     }
 
@@ -26,6 +26,20 @@ export class RecipesService {
                     search: search || ''
                 }
             })
+                .then((res) => {
+                    console.debug('Response From PhoodChef: ', res.data);
+                    resolve(res.data);
+                })
+                .catch((res) => {
+                    console.log('PhoodChef API Failure...');
+                    reject(res.data);
+                });
+        });
+    }
+
+    public newRecipe(recipe: recipeModels.Recipe): Promise<recipeModels.ApiWrapper<recipeModels.Recipe>> {
+        return new Promise((resolve, reject) => {
+            this.axiosInstance.post('recipes', recipe)
                 .then((res) => {
                     console.debug('Response From PhoodChef: ', res.data);
                     resolve(res.data);

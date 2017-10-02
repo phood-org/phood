@@ -18,8 +18,6 @@ export function recipeReducer(state: recipeModels.RecipeState = initialState, ac
     switch (action.type) {
         case (recipeActions.ADD_RECIPE):
             return { ...state, recipes: _([action.payload.Recipe]).unionBy(state.recipes, (r) => r.Id).sortBy((r) => r.Id).value() };
-        case (recipeActions.GET_RECIPE_FROM_DB):
-            return { ...state };
         case (recipeActions.ADD_PAGE):
             let newPages = { ...state.pages };
             let oldPages = state.pages[action.payload.Search] ? state.pages[action.payload.Search] : [];

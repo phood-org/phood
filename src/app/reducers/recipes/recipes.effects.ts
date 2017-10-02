@@ -57,6 +57,23 @@ export class RecipesEffect {
                 );
         });
 
+    @Effect()
+    public addRecipes = this.actions$
+        .ofType(recipeActions.GET_RECIPES)
+        .map(toPayload)
+        .mergeMap<recipeModels.RecipePayload, ActionWithPayload<recipeModels.RecipePayload>>((payload, i) => {
+            let loadingId = shortId.generate();
+            return Observable
+                .from([
+                    recipeActions.setLoading(loadingId)
+                ])
+                .merge(Observable
+                    .fromPromise(this.recipesService.newRecipe(payload.Recipe))
+                    .mergeMap<recipeModels.ApiWrapper<recipeModels.Recipe>, ActionWithPayload<recipeModels.RecipePayload>>((result) => {
+                        return recipeActions.addRecipe(result.Data);
+                    }));
+        });
+
     constructor(
         private actions$: Actions,
         private store: Store<IReducers>,

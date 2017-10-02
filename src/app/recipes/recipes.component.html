@@ -1,18 +1,21 @@
 <div class="container-fluid h-100">
   <div class="row h-100">
     <div class="col-sm-3 h-100 d-flex flex-column">
-      <div class="col-md-auto d-flex px -0">
-        <button class="col-auto" (click)="nextPageClick()">Next Page</button>
+      <div class="col-md-auto d-flex">
         <input class="col" type="text" [(ngModel)]="searchText" (input)="nextPageClick()" />
-        <div class="col-auto">
-          <i class="fa fa-spinner fa-pulse fa-fw" *ngIf="isLoading"></i>
-          <span class="sr-only">Loading...</span>
-        </div>
       </div>
-      <div class="scroll col flexOne pl-0">
+      <div class="scroll col mt-3">
         <div *ngFor="let recipe of filteredRecipes" class="w-100 greyHover pointer border-bottom-1" (click)="selectRecipe(recipe.Id)">
           {{recipe.Name}}
         </div>
+
+        <!-- Spinner if loading, next button if not -->
+        <div class="col-auto text-center">
+          <i class="fa fa-spinner fa-pulse fa-fw" *ngIf="isLoading"></i>
+          <span class="sr-only">Loading...</span>
+        </div>
+        
+        <button class="col btn btn-outline-primary pointer" *ngIf="!isLoading" (click)="nextPageClick()">Next Page</button>
       </div>
     </div>
 
